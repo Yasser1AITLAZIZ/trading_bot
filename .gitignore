@@ -1,0 +1,349 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Trading Bot specific
+data/
+logs/
+backups/
+*.db
+*.sqlite
+*.sqlite3
+
+# Node.js / Next.js
+ui/node_modules/
+ui/.next/
+ui/out/
+ui/build/
+ui/dist/
+
+# npm
+ui/npm-debug.log*
+ui/yarn-debug.log*
+ui/yarn-error.log*
+ui/.pnpm-debug.log*
+
+# Runtime data
+ui/pids
+ui/*.pid
+ui/*.seed
+ui/*.pid.lock
+
+# Coverage directory used by tools like istanbul
+ui/coverage/
+ui/.nyc_output
+
+# Grunt intermediate storage
+ui/.grunt
+
+# Bower dependency directory
+ui/bower_components
+
+# node-waf configuration
+ui/.lock-wscript
+
+# Compiled binary addons
+ui/build/Release
+
+# Dependency directories
+ui/node_modules/
+ui/jspm_packages/
+
+# TypeScript cache
+ui/*.tsbuildinfo
+
+# Optional npm cache directory
+ui/.npm
+
+# Optional eslint cache
+ui/.eslintcache
+
+# Optional stylelint cache
+ui/.stylelintcache
+
+# Microbundle cache
+ui/.rpt2_cache/
+ui/.rts2_cache_cjs/
+ui/.rts2_cache_es/
+ui/.rts2_cache_umd/
+
+# Optional REPL history
+ui/.node_repl_history
+
+# Output of 'npm pack'
+ui/*.tgz
+
+# Yarn Integrity file
+ui/.yarn-integrity
+
+# dotenv environment variable files
+ui/.env
+ui/.env.development.local
+ui/.env.test.local
+ui/.env.production.local
+ui/.env.local
+
+# parcel-bundler cache
+ui/.cache
+ui/.parcel-cache
+
+# Next.js build output
+ui/.next
+ui/out
+
+# Nuxt.js build / generate output
+ui/.nuxt
+ui/dist
+
+# Gatsby files
+ui/.cache/
+ui/public
+
+# Storybook build outputs
+ui/.out
+ui/.storybook-out
+ui/storybook-static
+
+# Temporary folders
+ui/tmp/
+ui/temp/
+
+# Editor directories and files
+ui/.vscode/*
+ui!.vscode/extensions.json
+ui/.idea
+ui.DS_Store
+ui*.suo
+ui*.ntvs*
+ui*.njsproj
+ui*.sln
+ui*.sw?
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# IDE
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# Temporary folders
+tmp/
+temp/
+
+cursor/

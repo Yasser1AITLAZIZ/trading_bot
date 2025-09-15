@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Backend API Server for testing
+  trading-bot-api-test:
+    build: .
+    container_name: genai-trading-bot-api-test
+    environment:
+      # Test configuration
+      - BINANCE_MODE=paper
+      - TRADING_TRADING_ENABLED=false
+      - LLM_PRIMARY_PROVIDER=openai
+      - LOG_LEVEL=DEBUG
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    ports:
+      - "8001:8000"  # Different port for testing
+    command: >
+      python -m src.api_cli
+    networks:
+      - test-network
+
+  # Frontend Next.js Application for testing
+  trading-bot-ui-test:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    container_name: genai-trading-bot-ui-test
+    environment:
+      - NEXT_PUBLIC_API_URL=http://trading-bot-api-test:8000
+      - NEXT_PUBLIC_WS_URL=ws://trading-bot-api-test:8000
+      - NODE_ENV=test
+    ports:
+      - "3001:3000"  # Different port for testing
+    depends_on:
+      - trading-bot-api-test
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge

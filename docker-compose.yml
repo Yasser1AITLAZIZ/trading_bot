@@ -1,0 +1,149 @@
+version: '3.8'
+
+services:
+  # Backend API Server
+  trading-bot-api:
+    build: .
+    container_name: genai-trading-bot-api
+    restart: unless-stopped
+    environment:
+      # Trading Configuration
+      - BINANCE_MODE=paper
+      - TRADING_TRADING_ENABLED=false
+      - TRADING_MAX_CONCURRENT_ORDERS=2
+      
+      # LLM Configuration
+      - LLM_PRIMARY_PROVIDER=openai
+      - LLM_OPENAI_API_KEY=${LLM_OPENAI_API_KEY}
+      
+      # Binance Configuration
+      - BINANCE_API_KEY=${BINANCE_API_KEY}
+      - BINANCE_SECRET_KEY=${BINANCE_SECRET_KEY}
+      
+      # Telegram Configuration (Optional)
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS:-}
+      
+      # Streaming Configuration
+      - STREAMING_ANALYSIS_INTERVAL=60
+      - STREAMING_BUFFER_MAX_SIZE=480
+      
+      # Logging
+      - LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+      - ./.env:/app/.env:ro
+    ports:
+      - "8000:8000"  # API server
+    healthcheck:
+      test: ["CMD", "python", "-m", "scripts.health_check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    command: >
+      python -m src.api.server
+    networks:
+      - trading-network
+
+  # Frontend Next.js Application
+  trading-bot-ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    container_name: genai-trading-bot-ui
+    restart: unless-stopped
+    environment:
+      - NEXT_PUBLIC_API_URL=http://trading-bot-api:8000
+      - NEXT_PUBLIC_WS_URL=ws://trading-bot-api:8000
+    ports:
+      - "3000:3000"  # Next.js app
+    depends_on:
+      - trading-bot-api
+    networks:
+      - trading-network
+
+  # Trading Bot (Optional - can be started via UI)
+  trading-bot:
+    build: .
+    container_name: genai-trading-bot
+    restart: "no"  # Don't auto-restart, controlled via UI
+    environment:
+      # Trading Configuration
+      - BINANCE_MODE=paper
+      - TRADING_TRADING_ENABLED=false
+      - TRADING_MAX_CONCURRENT_ORDERS=2
+      
+      # LLM Configuration
+      - LLM_PRIMARY_PROVIDER=openai
+      - LLM_OPENAI_API_KEY=${LLM_OPENAI_API_KEY}
+      
+      # Binance Configuration
+      - BINANCE_API_KEY=${BINANCE_API_KEY}
+      - BINANCE_SECRET_KEY=${BINANCE_SECRET_KEY}
+      
+      # Telegram Configuration (Optional)
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_ALLOWED_USERS=${TELEGRAM_ALLOWED_USERS:-}
+      
+      # Streaming Configuration
+      - STREAMING_ANALYSIS_INTERVAL=60
+      - STREAMING_BUFFER_MAX_SIZE=480
+      
+      # Logging
+      - LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+      - ./.env:/app/.env:ro
+    depends_on:
+      - trading-bot-api
+    networks:
+      - trading-network
+    profiles:
+      - bot  # Only start when explicitly requested
+
+  # Optional: Redis for caching (if needed in future)
+  redis:
+    image: redis:7-alpine
+    container_name: trading-bot-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    profiles:
+      - redis
+    networks:
+      - trading-network
+
+  # Optional: PostgreSQL for advanced data storage (if needed in future)
+  postgres:
+    image: postgres:15-alpine
+    container_name: trading-bot-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=trading_bot
+      - POSTGRES_USER=trading
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-trading123}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    profiles:
+      - postgres
+    networks:
+      - trading-network
+
+volumes:
+  redis_data:
+  postgres_data:
+
+networks:
+  trading-network:
+    driver: bridge
