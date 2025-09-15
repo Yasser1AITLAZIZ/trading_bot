@@ -347,3 +347,4 @@ tmp/
 temp/
 
 cursor/
+cursor/rules/*

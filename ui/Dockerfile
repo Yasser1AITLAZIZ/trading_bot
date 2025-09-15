@@ -5,15 +5,18 @@ FROM node:18-alpine AS deps
 WORKDIR /app
 
 # Copy package files
-COPY package.json package-lock.json* ./
-RUN npm ci --only=production
+COPY package.json ./
+RUN npm install --only=production
 
 # Builder stage
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copy dependencies
-COPY --from=deps /app/node_modules ./node_modules
+# Copy package files and install all dependencies (including dev)
+COPY package.json ./
+RUN npm install
+
+# Copy source code
 COPY . .
 
 # Build the application
